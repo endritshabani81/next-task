@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { initializeDatabase } from "./config/database";
+import { productRoutes } from "./routes/product.routes";
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.get("/health", (req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+app.use("/", productRoutes);
 
 // Global error handler
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
