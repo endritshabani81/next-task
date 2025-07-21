@@ -11,7 +11,6 @@ const DeletedProductsPage = () => {
   );
   const queryClient = useQueryClient();
 
-  // Fetch deleted products
   const {
     data: deletedProducts = [],
     isLoading,
@@ -21,18 +20,16 @@ const DeletedProductsPage = () => {
     queryFn: getDeletedProducts,
   });
 
-  // Restore mutation
   const restoreMutation = useMutation({
     mutationFn: restoreProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["deleted-products"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["deleted-products"] });
       setRestoreModalOpen(false);
       setProductToRestore(null);
     },
     onError: (error) => {
       console.error("Error restoring product:", error);
-      // You could add a toast notification here
     },
   });
 
@@ -88,7 +85,6 @@ const DeletedProductsPage = () => {
 
   return (
     <div>
-      {/* Header */}
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
@@ -105,7 +101,6 @@ const DeletedProductsPage = () => {
         </div>
       </div>
 
-      {/* Deleted Products List */}
       {deletedProducts.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
@@ -200,7 +195,6 @@ const DeletedProductsPage = () => {
         </div>
       )}
 
-      {/* Restore Confirmation Modal */}
       {restoreModalOpen && productToRestore && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">

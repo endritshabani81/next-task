@@ -7,7 +7,6 @@ import type {
 } from "../types/product";
 import { apiClient } from "./client";
 
-// Product CRUD operations
 export const getAllProducts = async (): Promise<Product[]> => {
   return apiClient.get<Product[]>("/products");
 };
@@ -33,14 +32,12 @@ export const deleteProduct = async (id: string): Promise<void> => {
   return apiClient.delete<void>(`/products/${id}`);
 };
 
-// AI Tag suggestions
 export const suggestTags = async (
   data: TagSuggestionRequest
 ): Promise<TagSuggestionResponse> => {
   return apiClient.post<TagSuggestionResponse>("/suggest-tags", data);
 };
 
-// Health check
 export const healthCheck = async (): Promise<{
   status: string;
   service: string;
@@ -49,7 +46,6 @@ export const healthCheck = async (): Promise<{
   return apiClient.get("/health");
 };
 
-// Soft delete operations
 export const getDeletedProducts = async (): Promise<Product[]> => {
   return apiClient.get<Product[]>("/products/deleted");
 };

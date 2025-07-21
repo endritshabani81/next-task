@@ -60,7 +60,6 @@ const ProductFormPage = () => {
     }
   }, [product]);
 
-  // Create mutation
   const createMutation = useMutation({
     mutationFn: createProduct,
     onSuccess: () => {
@@ -69,7 +68,6 @@ const ProductFormPage = () => {
     },
   });
 
-  // Update mutation
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateProductDto }) =>
       updateProduct(id, data),
@@ -80,7 +78,6 @@ const ProductFormPage = () => {
     },
   });
 
-  // Tag suggestion mutation
   const tagSuggestionMutation = useMutation({
     mutationFn: suggestTags,
     onSuccess: (data) => {
@@ -91,7 +88,6 @@ const ProductFormPage = () => {
     },
     onError: (error) => {
       console.error("Error getting tag suggestions:", error);
-      // You could show a toast notification here
     },
   });
 
@@ -157,7 +153,6 @@ const ProductFormPage = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -212,7 +207,6 @@ const ProductFormPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Product Name */}
           <div>
             <label htmlFor="name" className="label">
               Product Name *
@@ -236,7 +230,6 @@ const ProductFormPage = () => {
             )}
           </div>
 
-          {/* Description */}
           <div>
             <label htmlFor="description" className="label">
               Description *
@@ -260,7 +253,6 @@ const ProductFormPage = () => {
             )}
           </div>
 
-          {/* Tags */}
           <div>
             <div className="flex items-center justify-between mb-1">
               <label htmlFor="tags" className="label">
@@ -303,7 +295,6 @@ const ProductFormPage = () => {
             </p>
           </div>
 
-          {/* Price */}
           <div>
             <label htmlFor="price" className="label">
               Price * (USD)
@@ -329,7 +320,6 @@ const ProductFormPage = () => {
             )}
           </div>
 
-          {/* Form Actions */}
           <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
             <Link to="/products" className="btn btn-secondary">
               Cancel
@@ -350,7 +340,6 @@ const ProductFormPage = () => {
           </div>
         </form>
 
-        {/* Error Messages */}
         {(createMutation.error || updateMutation.error) && (
           <div className="mt-4 rounded-md bg-red-50 p-4">
             <div className="text-sm text-red-700">

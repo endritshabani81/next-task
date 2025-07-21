@@ -13,7 +13,6 @@ import ProductFormPage from "./pages/ProductFormPage";
 import DeletedProductsPage from "./pages/DeletedProductsPage";
 import Layout from "./components/Layout";
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -23,7 +22,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated() ? children : <Navigate to="/login" replace />;
 };
@@ -34,10 +32,8 @@ function App() {
       <Router>
         <div className="min-h-screen h-full bg-gray-50">
           <Routes>
-            {/* Public routes */}
             <Route path="/login" element={<LoginPage />} />
 
-            {/* Protected routes */}
             <Route
               path="/"
               element={
@@ -89,7 +85,6 @@ function App() {
               }
             />
 
-            {/* Catch all route */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

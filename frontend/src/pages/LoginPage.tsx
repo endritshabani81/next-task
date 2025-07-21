@@ -8,7 +8,6 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Redirect if already authenticated
   if (isAuthenticated()) {
     return <Navigate to="/" replace />;
   }
@@ -25,10 +24,8 @@ const LoginPage = () => {
     }
 
     try {
-      // Store the token
       setAuthToken(token.trim());
 
-      // Try to make a test API call to verify the token
       const response = await fetch("http://localhost:8080/health", {
         headers: {
           Authorization: `Bearer ${token.trim()}`,
@@ -39,11 +36,9 @@ const LoginPage = () => {
         throw new Error("Invalid token");
       }
 
-      // Success - redirect to products page
       navigate("/products");
     } catch {
       setError("Invalid token. Please check your token and try again.");
-      // Clear the invalid token
       localStorage.removeItem("auth_token");
     } finally {
       setIsLoading(false);

@@ -10,7 +10,6 @@ const ProductListPage = () => {
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const queryClient = useQueryClient();
 
-  // Fetch products
   const {
     data: products = [],
     isLoading,
@@ -20,17 +19,16 @@ const ProductListPage = () => {
     queryFn: getAllProducts,
   });
 
-  // Delete mutation
   const deleteMutation = useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["deleted-products"] });
       setDeleteModalOpen(false);
       setProductToDelete(null);
     },
     onError: (error) => {
       console.error("Error deleting product:", error);
-      // You could add a toast notification here
     },
   });
 
@@ -80,7 +78,6 @@ const ProductListPage = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Products</h1>
@@ -93,7 +90,6 @@ const ProductListPage = () => {
         </div>
       </div>
 
-      {/* Products Table */}
       {products.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-gray-500 mb-4">No products found</div>
@@ -185,7 +181,6 @@ const ProductListPage = () => {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={deleteModalOpen}
         onClose={() => {
